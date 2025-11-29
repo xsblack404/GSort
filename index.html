@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Gender Sorter Utility</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- External Libraries (CDNs for demo purposes) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script defer src="app.js"></script>
+</head>
+<body>
+    <main class="app-container">
+        <header class="app-header">
+            <h1>AI Image Sorter</h1>
+            <p>Sorts images into folders by detected gender securely in your browser.</p>
+        </header>
 
+        <!-- System Status Notification -->
+        <div id="system-status" class="status-banner loading">
+            <span class="spinner"></span>
+            <span id="status-text">Initializing AI Models...</span>
+        </div>
+
+        <!-- Upload Zone -->
+        <section class="upload-section">
+            <div id="drop-zone" class="drop-zone" tabindex="0" role="button" aria-label="Upload images">
+                <div class="drop-content">
+                    <svg class="icon" viewBox="0 0 24 24" width="48" height="48">
+                        <path fill="currentColor" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+                    </svg>
+                    <h3>Drag & Drop Images Here</h3>
+                    <p>or click to browse (JPG, PNG)</p>
+                </div>
+                <input type="file" id="file-input" multiple accept="image/jpeg, image/png, image/webp" hidden>
+            </div>
+        </section>
+
+        <!-- Processing Dashboard -->
+        <section id="dashboard" class="dashboard hidden">
+            <div class="progress-container">
+                <div class="progress-labels">
+                    <span id="progress-text">Processing...</span>
+                    <span id="progress-percentage">0%</span>
+                </div>
+                <div class="progress-bar-track">
+                    <div id="progress-bar-fill" class="progress-bar-fill"></div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card male">
+                    <span class="stat-label">Male</span>
+                    <span id="count-male" class="stat-value">0</span>
+                </div>
+                <div class="stat-card female">
+                    <span class="stat-label">Female</span>
+                    <span id="count-female" class="stat-value">0</span>
+                </div>
+                <div class="stat-card unknown">
+                    <span class="stat-label">Unknown/No Face</span>
+                    <span id="count-unknown" class="stat-value">0</span>
+                </div>
+            </div>
+
+            <div class="action-area">
+                <button id="download-btn" class="btn primary-btn" disabled>
+                    Generating Zip...
+                </button>
+                <button id="reset-btn" class="btn secondary-btn">Start Over</button>
+            </div>
+        </section>
+
+        <!-- Error Log Area -->
+        <div id="error-log" class="error-log hidden"></div>
+    </main>
+</body>
+</html>
